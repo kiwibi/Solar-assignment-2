@@ -1,0 +1,25 @@
+I would like to do dithering.
+
+Hur gör jag dithering för icke monokroma värden?
+
+Framerate counter, Easy math. Done
+user controlled camera, we have that. Done
+Read shaders and textures from disk, we have this. Done
+Four or more objects, trivial. Done with the easy ones.
+Phong reflections, new. Done
+Directional light, I think we have this, but it needs heavy reworking. Done
+
+Our directional light needs to be able to change direction. And colour.
+
+What is normal mapping?
+What is shadow mapping? Wikipedia shadow mapping CSSM
+How to post-process using framebuffer?
+Animation should be doable.
+What is Signed distance field? Weird blurry fonts
+
+Note: steal everything you can
+
+program
+vbuffer
+vformat
+sampler

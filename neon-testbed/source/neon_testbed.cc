@@ -92,7 +92,7 @@ namespace neon {
 
 
 		framebuffer_format formats[] = { FRAMEBUFFER_FORMAT_RGBA8 };
-		if(!framebuffer_.create(1280, 720, _countof(formats), formats, FRAMEBUFFER_FORMAT_D32)) { // 240, 135 for low res goodness
+		if(!framebuffer_.create(240, 135, _countof(formats), formats, FRAMEBUFFER_FORMAT_D32)) { // 240, 135 for low res goodness, 1280, 720 for full res
 			return false;
 		}
       
@@ -135,6 +135,13 @@ namespace neon {
 			if (object3_.world_[1][1] <= 1)
 				teapotLength_ = false;
 		}
+
+      //Spin teapot nr 4
+
+      object4_.world_ = glm::rotate(object4_.world_,
+                                    rotation_,
+                                    glm::vec3(0.0f, 0.0f, 1.0f));
+
 		//	FPS claculations
 		int time = (int)(1.0f / dt.as_seconds());
 		string fps = std::to_string(time);

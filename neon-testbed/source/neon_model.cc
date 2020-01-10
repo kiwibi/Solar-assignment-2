@@ -99,9 +99,9 @@ namespace neon {
       program_.set_uniform_mat4("view", camera.view_);
       program_.set_uniform_mat4("world", world);
 
-      program_.set_uniform_vec3("lightDir", glm::vec3(0.0, 1.0, 0.0));
+      program_.set_uniform_vec3("lightDir", glm::vec3(1.0, 1.0, 0.0));
       program_.set_uniform_vec3("lightColor", glm::vec3(1.0, 1.0, 1.0));
-      program_.set_uniform_float("lightPos", 4.0f);
+      program_.set_uniform_float("lightPower", 4.0f);
 
       texture_.bind();
       sampler_.bind();
