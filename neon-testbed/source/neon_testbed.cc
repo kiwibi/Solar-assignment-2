@@ -156,6 +156,9 @@ namespace neon {
 
 		framebuffer::unbind(1280, 720);
 
+      // Here we do post processing effects
+      // !
+
 		framebuffer_.blit(0, 0, 1280, 720);
 
       // flush fps counter to actually draw it.

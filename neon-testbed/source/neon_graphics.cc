@@ -859,7 +859,7 @@ namespace neon {
 
       format_.add_attribute(0, 3, GL_FLOAT, false); //Adding the vertex to format_
       format_.add_attribute(1, 2, GL_FLOAT, false); //TexCoord;
-      format_.add_attribute(2, 3, GL_FLOAT, false); //Normals (Unused for now)
+      format_.add_attribute(2, 3, GL_FLOAT, false); //Normals
 
       dynamic_array<uint32> indices;
       for (int32 z = 0; z < height - 1; z++)
@@ -923,13 +923,15 @@ namespace neon {
                                  vertices.data())) {
          return false;
       }
+      vertices.clear();
 
       if (!index_buffer_.create(sizeof(uint32) * (int)indices.size(),
                                 GL_UNSIGNED_INT,
                                 indices.data())) {
          return false;
       }
-      
+      indices.clear();
+
       if (!texture_.create(texture_filename)) {
          return false;
       }
