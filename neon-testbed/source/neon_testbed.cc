@@ -64,6 +64,10 @@ namespace neon {
 
 		camera_.set_perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f); //Just changing it so that our perspective is controlled by the camera instead.
 
+      if (!frameCounter_.create()) {
+         return false;
+      }
+
 		if (!skybox_.create()) {
 			return false;
 		}
@@ -137,6 +141,8 @@ namespace neon {
 		//	FPS claculations
 		int time = (int)(1.0f / dt.as_seconds());
 		string fps = std::to_string(time);
+      //render fps counter
+      frameCounter_.render(0.0f, 1.0f, "FPS: " + fps);
 
 		framebuffer_.bind();
 
@@ -151,13 +157,12 @@ namespace neon {
 		object3_.model_.render(camera_, object3_.world_);
 		object4_.model_.render(camera_, object4_.world_);
 
-		//render fps counter
-		frameCounter_.render(0.0f, 1.0f, "FPS: " + fps);
-		frameCounter_.flush();
-
 		framebuffer::unbind(1280, 720);
 
 		framebuffer_.blit(0, 0, 1280, 720);
+
+      // flush fps counter to actually draw it.
+      frameCounter_.flush();
 
       return true;
    }
