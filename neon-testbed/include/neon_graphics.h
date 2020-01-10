@@ -60,6 +60,7 @@ namespace neon {
       bool set_uniform_mat4(const string& name, const glm::mat4& value);
       bool set_uniform_vec4(const string& name, const glm::vec4& value);
       bool set_uniform_vec3(const string& name, const glm::vec3& value);
+      bool set_uniform_float(const string& name, const GLfloat value);
 
       bool is_valid() const;
       void bind() const;

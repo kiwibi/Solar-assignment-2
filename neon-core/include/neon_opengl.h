@@ -315,6 +315,7 @@ typedef unsigned short GLushort;
    GLF(void, glShaderSource, GLuint shader, GLsizei count, const GLchar *const*string, const GLint *length) \
    GLF(void, glUseProgram, GLuint program) \
    GLF(void, glUniform1i, GLint location, const GLint value) \
+   GLF(void, glUniform1f, GLint location, const GLfloat value) \
    GLF(void, glUniform1fv, GLint location, GLsizei count, const GLfloat *value) \
    GLF(void, glUniform2fv, GLint location, GLsizei count, const GLfloat *value) \
    GLF(void, glUniform3fv, GLint location, GLsizei count, const GLfloat *value) \

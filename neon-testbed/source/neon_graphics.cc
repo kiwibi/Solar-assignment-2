@@ -250,6 +250,16 @@ namespace neon {
       return true;
    }
 
+   bool shader_program::set_uniform_float(const string& name, const GLfloat value) {
+      GLuint location = get_uniform_location(name);
+      if (location == -1) {
+         return false;
+      }
+      glUniform1f(location, value);
+
+      return true;
+   }
+
    bool shader_program::is_valid() const {
       return id_ != 0;
    }
