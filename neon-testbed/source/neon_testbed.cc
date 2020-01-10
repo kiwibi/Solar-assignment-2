@@ -87,9 +87,6 @@ namespace neon {
 
 		object1_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -20.0f));
 		object2_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0.0f, -20.0f));
-		object2_.world_ = glm::rotate(glm::mat4(1.0f),
-									 90.0f,
-									 glm::vec3(0.0f, 1.0f, 0.0f));
 		object3_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(20.0f, 0.0f, -20.0f));
 		object4_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(30.0f, 0.0f, -20.0f));
 
@@ -124,7 +121,7 @@ namespace neon {
 		pos_.x = (float)object1_.world_[3][0] + glm::cos(orbit_) * 10;
 		pos_.y = (float)object1_.world_[3][1] + glm::sin(orbit_) * 10;
 		pos_.z = -20;
-		object2_.world_ = glm::translate(glm::mat4(1.0f), pos_);
+		object2_.world_ = glm::translate(object1_.world_, pos_);
 		//scale teapot nr 3 up & down
 		if (teapotLength_ == false)
 		{
