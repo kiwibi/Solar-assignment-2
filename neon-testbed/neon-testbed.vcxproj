@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -91,6 +91,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\neon_dithering.cpp" />
     <ClCompile Include="source\neon_framebuffer.cc" />
     <ClCompile Include="source\neon_graphics.cc" />
     <ClCompile Include="source\neon_model.cc" />
@@ -98,6 +99,7 @@
     <ClCompile Include="source\neon_testbed.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\neon_dithering.h" />
     <ClInclude Include="include\neon_framebuffer.h" />
     <ClInclude Include="include\neon_graphics.h" />
     <ClInclude Include="include\neon_model.h" />
