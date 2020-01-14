@@ -54,6 +54,7 @@ namespace neon {
 		, controller_(camera_, keyboard_, mouse_) // controller demands to have these, so we have to send it
 		, orbit_(0.0f)
 		, teapotLength_(false)
+      , light_(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 4.0f)
 	{
 	}
 
@@ -84,6 +85,11 @@ namespace neon {
 		if (!object4_.create(glm::mat4(1.0f), "assets/model/teapot_diffuse.png", "assets/model/teapot.glb")) {
 			return false;
 		}
+
+      object1_.light_ = &light_;
+      object2_.light_ = &light_;
+      object3_.light_ = &light_;
+      object4_.light_ = &light_;
 
 		object1_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -20.0f));
 		object2_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0.0f, -20.0f));
@@ -156,10 +162,10 @@ namespace neon {
 		//	render objects
 		skybox_.render(camera_);
 
-		object1_.model_.render(camera_, object1_.world_);
-		object2_.model_.render(camera_, object2_.world_);
-		object3_.model_.render(camera_, object3_.world_);
-		object4_.model_.render(camera_, object4_.world_);
+		object1_.render(camera_);
+		object2_.render(camera_);
+		object3_.render(camera_);
+		object4_.render(camera_);
 
 		framebuffer::unbind(1280, 720);
 

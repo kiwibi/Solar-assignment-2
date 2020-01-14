@@ -91,6 +91,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\DirectionalLight.cpp" />
     <ClCompile Include="source\neon_dithering.cpp" />
     <ClCompile Include="source\neon_framebuffer.cc" />
     <ClCompile Include="source\neon_graphics.cc" />
@@ -99,6 +100,7 @@
     <ClCompile Include="source\neon_testbed.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\DirectionalLight.h" />
     <ClInclude Include="include\neon_dithering.h" />
     <ClInclude Include="include\neon_framebuffer.h" />
     <ClInclude Include="include\neon_graphics.h" />

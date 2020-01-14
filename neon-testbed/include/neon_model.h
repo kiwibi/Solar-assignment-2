@@ -4,6 +4,7 @@
 #define NEON_MODEL_H_INCLUDED
 
 #include "neon_graphics.h"
+#include "DirectionalLight.h"
 
 // note: forward declare
 struct aiNode;
@@ -32,7 +33,7 @@ namespace neon {
       bool create_from_file(const string &filename, const string &texturePath);
       void destroy();
 
-      void render(const fps_camera &camera, const glm::mat4 &world);
+      void render(const fps_camera &camera, const glm::mat4 &world, const DirectionalLight* light);
 
       // note: assimp
       bool process_node(const aiNode *node, const aiScene *scene);

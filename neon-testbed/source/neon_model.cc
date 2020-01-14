@@ -87,7 +87,7 @@ namespace neon {
       index_buffer_.destroy();
    }
 
-   void model::render(const fps_camera &camera, const glm::mat4 &world) {
+   void model::render(const fps_camera &camera, const glm::mat4 &world, const DirectionalLight* light) {
       GLenum err = GL_NO_ERROR;
 
       glEnable(GL_DEPTH_TEST);
@@ -99,9 +99,9 @@ namespace neon {
       program_.set_uniform_mat4("view", camera.view_);
       program_.set_uniform_mat4("world", world);
 
-      program_.set_uniform_vec3("lightDir", glm::vec3(1.0, 1.0, 0.0));
-      program_.set_uniform_vec3("lightColor", glm::vec3(1.0, 1.0, 1.0));
-      program_.set_uniform_float("lightPower", 4.0f);
+      program_.set_uniform_vec3("lightDir", light->direction_);
+      program_.set_uniform_vec3("lightColor", light->colour_);
+      program_.set_uniform_float("lightPower", light->power_);
 
       texture_.bind();
       sampler_.bind();

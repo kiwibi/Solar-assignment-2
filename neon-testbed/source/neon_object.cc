@@ -15,4 +15,9 @@ namespace neon {
 		}
 		return true;
 	}
+
+   void object::render(fps_camera camera_)
+   {
+      model_.render(camera_, world_, light_);
+   }
 }
