@@ -1,0 +1,49 @@
+#version 330
+
+// https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_reflection_model
+// Heavily based on this
+
+uniform sampler2D diffuse;
+
+in vec2 f_texcoord;
+in vec3 f_normal;
+in vec3 f_vert;
+
+out vec4 frag_color;
+
+//directional light
+uniform vec3 lightDir;
+uniform vec3 lightColor;
+uniform float lightPower;
+
+const vec3 ambientColor = vec3(0.1, 0.1, 0.1);
+const vec3 diffuseColor = vec3(0.5, 0.5, 0.5);
+const vec3 specColor = vec3(1.0, 1.0, 1.0);
+const float shininess = 100.0;
+const float screenGamma = 2.2; // Assumes screen is set to sRGB or summin'
+
+void main() {
+	
+	vec3 normal = normalize(f_normal);
+	vec3 f_lightDir = normalize(lightDir);
+	
+	float lambertian = max(dot(f_lightDir,normal), 0);
+	float specular = 0;
+	
+	if (lambertian > 0) {
+		vec3 viewDir = normalize(-f_vert);
+		
+		vec3 halfDir = normalize(f_lightDir + viewDir);
+		float specAngle = max(dot(halfDir, normal), 0);
+		specular = pow(specAngle, shininess);
+		
+	}
+	
+	vec3 colorLinear = ambientColor + 
+					   diffuseColor * lambertian * lightColor * lightPower +
+					   specColor * specular * lightColor *lightPower;
+	
+	vec3 colorGammaCorrected = pow(colorLinear, vec3(1.0 / screenGamma));
+	
+	frag_color = vec4(colorGammaCorrected, 1.0) * texture(diffuse, f_texcoord);
+}

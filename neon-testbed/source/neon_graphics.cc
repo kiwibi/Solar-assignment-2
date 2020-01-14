@@ -876,7 +876,7 @@ namespace neon {
             const uint8* rgba = heightmap.data() + offset;
 
             vertex tmp;
-            tmp.position_ = { x/25.5f, rgba[1] / 255.0f, z/25.5f };
+            tmp.position_ = { x/2.55f - 50, rgba[1] / 25.5f - 10, z/2.55f - 50 };
             tmp.texcoord_ = { (float)x / (float)width, (float)z / (float)height };
             tmp.normal_ = {0.0f, 0.0f, 0.0f};
             vertices.push_back(tmp);
