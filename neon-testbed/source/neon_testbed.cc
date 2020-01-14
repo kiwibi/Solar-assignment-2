@@ -178,7 +178,7 @@ namespace neon {
 		object3_.render(camera_);
 		object4_.render(camera_);
 
-		//terrain_.render();
+		terrain_.render();
 
       wall_.render(camera_);
 

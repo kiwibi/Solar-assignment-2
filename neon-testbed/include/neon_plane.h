@@ -11,6 +11,9 @@ namespace neon {
 		struct vertex {
 			glm::vec3 position_;
 			glm::vec2 texcoords_;
+         glm::vec3 normal = glm::vec3(0.0f, 0.0f, 1.0f);
+         glm::vec3 tangent;
+         glm::vec3 bitangent;
 		};
 		wall();
 		bool create(const string& texturePath, const string& normalMapPath);
@@ -19,6 +22,7 @@ namespace neon {
 
 		shader_program program_;
 		vertex_buffer vbo_;
+      index_buffer index_;
 		vertex_format format_;
 		texture texture_;
       texture normalMap_;
@@ -29,6 +33,9 @@ namespace neon {
 		glm::mat4 world_;
 
       DirectionalLight* light_;
+
+      glm::vec3 tangent_;
+      glm::vec3 bitangent_;
 	};
 }
 

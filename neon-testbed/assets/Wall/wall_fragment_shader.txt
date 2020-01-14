@@ -9,6 +9,7 @@ uniform sampler2D normalMap; // slot 1
 in vec2 f_texcoord;
 in vec3 f_normal;
 in vec3 f_vert;
+in mat3 f_TBN;
 
 out vec4 frag_color;
 
@@ -26,6 +27,7 @@ const float screenGamma = 2.2; // Assumes screen is set to sRGB or summin'
 void main() {
 	vec3 normal = texture(normalMap, f_texcoord).rgb;
 	normal = normalize(normal * 2.0 - 1.0);
+	normal = normalize(f_TBN * normal);
 	vec3 f_lightDir = normalize(lightDir);
 	
 	float lambertian = max(dot(f_lightDir,normal), 0);

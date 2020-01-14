@@ -70,7 +70,7 @@ namespace neon {
       GLuint id_;
    };
 
-   constexpr uint32 ATTRIBUTE_COUNT = 4;
+   constexpr uint32 ATTRIBUTE_COUNT = 6;
 
    struct vertex_format {
       struct attribute {

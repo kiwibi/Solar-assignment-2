@@ -26,29 +26,67 @@ namespace neon {
 		if (!normalMap_.create(normalMapPath)) {
 			return false;
 		}
-      
-		vertex vertices[] = {
-			//side 1, triangle 1
-			{ glm::vec3(-size_,   size_,   size_),   glm::vec2(0.0f,1.0f)},
-			{ glm::vec3(-size_,  -size_,   size_),   glm::vec2(0.0f,0.0f)},
-			{ glm::vec3( size_,   size_,   size_),   glm::vec2(1.0f,1.0f)},
-			//side 1, triangle 2
-			{ glm::vec3(-size_,  -size_,   size_),   glm::vec2(0.0f,0.0f)},
-			{ glm::vec3( size_,   size_,   size_),   glm::vec2(1.0f,1.0f)},
-			{ glm::vec3( size_,  -size_,   size_),   glm::vec2(1.0f,0.0f)},
-		};
+      vertex vertices[] = {
+         //side 1, triangle 1
+         { glm::vec3(-size_,   size_,   size_),   glm::vec2(0.0f,1.0f)},
+         { glm::vec3(-size_,  -size_,   size_),   glm::vec2(0.0f,0.0f)},
+         { glm::vec3(size_,  -size_,   size_),   glm::vec2(1.0f,0.0f)},
+         { glm::vec3(size_,   size_,   size_),   glm::vec2(1.0f,1.0f)},
+      };
 
-		if (!vbo_.create(sizeof(vertices), &vertices))
-		{
-			return false;
-		}
+      dynamic_array<uint32> indices;
+      indices.push_back(0);
+      indices.push_back(1);
+      indices.push_back(3);
+      indices.push_back(1);
+      indices.push_back(3);
+      indices.push_back(2);
 
-		normal_ = glm::vec3(0.0f, 0.0f, -1.0f);
+      if (!index_.create(sizeof(uint32) * (int)indices.size(),
+                         GL_UNSIGNED_INT, indices.data())) {
+         return false;
+      }
+
 
 		GLint position_location_ = program_.get_attrib_location("position");
 		GLint texcoords_location_ = program_.get_attrib_location("texcoord");
+      GLint normal_location_ = program_.get_attrib_location("normal");
+      GLint tangent_location_ = program_.get_attrib_location("tangent");
+      GLint bitangent_location_ = program_.get_attrib_location("bitangent");
 		format_.add_attribute(position_location_, 3, GL_FLOAT, false);
 		format_.add_attribute(texcoords_location_, 2, GL_FLOAT, false);
+      format_.add_attribute(normal_location_, 3, GL_FLOAT, false);
+      format_.add_attribute(tangent_location_, 3, GL_FLOAT, false);
+      format_.add_attribute(bitangent_location_, 3, GL_FLOAT, false);
+
+
+
+      glm::vec3 edge1 = vertices[1].position_ - vertices[0].position_;
+      glm::vec3 edge2 = vertices[2].position_ - vertices[0].position_;
+      glm::vec2 deltaUV1 = vertices[1].texcoords_ - vertices[0].texcoords_;
+      glm::vec2 deltaUV2 = vertices[2].texcoords_ - vertices[0].texcoords_;
+
+      float f = 1.0f / ( deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y );
+
+      tangent_.x = f * ( deltaUV2.y * edge1.x - deltaUV1.y * edge2.x );
+      tangent_.y = f * ( deltaUV2.y * edge1.y - deltaUV1.y * edge2.y );
+      tangent_.z = f * ( deltaUV2.y * edge1.z - deltaUV1.y * edge2.z );
+      tangent_ = glm::normalize(tangent_);
+
+      bitangent_.x = f * ( -deltaUV2.x * edge1.x + deltaUV1.x * edge2.x );
+      bitangent_.y = f * ( -deltaUV2.x * edge1.y + deltaUV1.x * edge2.y );
+      bitangent_.z = f * ( -deltaUV2.x * edge1.z + deltaUV1.x * edge2.z );
+      bitangent_ = glm::normalize(bitangent_);
+
+      for (auto& vertex : vertices){
+         vertex.bitangent = bitangent_;
+         vertex.tangent = tangent_;
+      }
+
+      if (!vbo_.create(sizeof(vertices), &vertices))
+      {
+         return false;
+      }
 
 		return true;
 	}
@@ -74,6 +112,7 @@ namespace neon {
       program_.set_uniform_int("normalMap", 1);
 
       vbo_.bind();
+      index_.bind();
       format_.bind();
 
       texture_.bind(0);
@@ -81,6 +120,6 @@ namespace neon {
       sampler_.bind(0);
       sampler_.bind(1);
 
-      vbo_.render(GL_TRIANGLES, 0, 6);
+      index_.render(GL_TRIANGLES, 1, 6);
    }
 }
