@@ -51,7 +51,7 @@ namespace neon {
 	// note: derived application class
 	testbed::testbed()
 		: rotation_(0.0f)
-		, controller_(camera_, keyboard_, mouse_) // controller demands to have these, so we have to send it
+		, controller_(camera_, light_, keyboard_, mouse_) // controller demands to have these, so we have to send it
 		, orbit_(0.0f)
 		, teapotLength_(false)
       , light_(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 4.0f)

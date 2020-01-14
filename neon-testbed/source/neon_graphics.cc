@@ -1,6 +1,7 @@
 // neon_graphics.cc
 
 #include "neon_graphics.h"
+#include "DirectionalLight.h"
 #include <cassert>
 
 //#define STB_IMAGE_IMPLEMENTATION // Kill this define because idk why
@@ -618,7 +619,7 @@ namespace neon {
       view_[3][2] = -glm::dot(position_, z);
 
       // note: movement helpers
-      x_axis = glm::normalize(x); // Floating point error might bug this shit out, but tommi is to lazy to nomralize it
+      x_axis = glm::normalize(x); // Floating point error might bug this shit out, but tommi is to lazy to normalize it
       y_axis = glm::normalize(y); // doing it myself though
       z_axis = glm::normalize(z);
    }
@@ -645,16 +646,17 @@ namespace neon {
    }
    // !fps_camera
 
-   // fps_camera_controller
-   fps_camera_controller::fps_camera_controller(fps_camera& camera, keyboard& kb, mouse& m)
+   // controller
+   controller::controller(fps_camera& camera, DirectionalLight& light, keyboard& kb, mouse& m)
       : camera_(camera)
+      , light_(light)
       , keyboard_(kb)
       , mouse_(m)
    {
       
    }
 
-   void fps_camera_controller::update(const time& deltatime) {
+   void controller::update(const time& deltatime) {
       constexpr float camera_speed = 5.0f; // Constant for cameras movement speed
       const float amount = camera_speed * deltatime.as_seconds(); // Times delta time so that it's constant
 
@@ -692,8 +694,23 @@ namespace neon {
       mouse_position_ = glm::vec2((float)mouse_.x_, (float)mouse_.y_);
 
       camera_.update();
+
+      // Lightsource controller
+
+      if (keyboard_.is_down(KEYCODE_UP)) {
+         light_.ChangeColour(deltatime.as_seconds());
+      }
+      if (keyboard_.is_down(KEYCODE_DOWN)) {
+         light_.ChangeColour(-deltatime.as_seconds());
+      }
+      if (keyboard_.is_down(KEYCODE_LEFT)) {
+         light_.rotate(deltatime.as_seconds() * 10);
+      }
+      if (keyboard_.is_down(KEYCODE_RIGHT)) {
+         light_.rotate(-deltatime.as_seconds() * 10);
+      }
    }
-   // !fps_camera_controller
+   // !controller
 
    // skybox
    skybox::skybox() {}

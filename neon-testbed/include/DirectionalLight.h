@@ -18,13 +18,20 @@ struct DirectionalLight
 {
    DirectionalLight();
    DirectionalLight(glm::vec3 direction, glm::vec3 colour, float power);
+   
+   void update();
 
-   void Rotate(); // maybe send in a direction to rotate in?
-   void ChangeColour(); // same as above basically
+   void rotate(float amount);// commands for controls
+
+   void ChangeColour(float amount);
 
    glm::vec3 direction_;
    glm::vec3 colour_;
    float power_;
+
+   float yaw_;    //Around y axis
+   float pitch_;  //Around x axis
+   float roll_;   //Around z axis
 };
 
 #endif //DIRECTIONAL_LIGTH_H_INCLUDED

@@ -5,6 +5,7 @@
 
 #include <neon_core.h>
 #include <neon_opengl.h>
+#include "DirectionalLight.h"
 
 #pragma warning(push) // Because they have unnamned things in here
 #pragma warning(disable: 4201)
@@ -170,12 +171,13 @@ namespace neon {
       glm::mat4 view_; // not sure what this is for right now.
    };
 
-   struct fps_camera_controller { // controller for our fps camera, duh
-      fps_camera_controller(fps_camera &camera, keyboard& kb, mouse& m); // no default constructor because we would never want a controller that doesn't have these
+   struct controller { // controller for our fps camera, duh
+      controller(fps_camera &camera, DirectionalLight &light, keyboard& kb, mouse& m); // no default constructor because we would never want a controller that doesn't have these
 
       void update(const time& deltatime); 
 
 		fps_camera& camera_; // a & reference may never be nullptr
+      DirectionalLight& light_;
       keyboard& keyboard_; // except when it is that is
       mouse& mouse_;
       glm::vec2 mouse_position_; // for calculatin the delta of the mouse position

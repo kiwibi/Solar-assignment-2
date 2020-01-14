@@ -38,7 +38,7 @@ namespace neon {
       bitmap_font frameCounter_;
       
       fps_camera camera_; // adding our camera
-      fps_camera_controller controller_; // and controller
+      controller controller_; // and controller
       skybox skybox_;
       terrain terrain_;
 

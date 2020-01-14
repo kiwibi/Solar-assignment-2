@@ -1,5 +1,8 @@
 #version 330
 
+// https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_reflection_model
+// Heavily based on this
+
 uniform sampler2D diffuse;
 
 in vec2 f_texcoord;
@@ -13,14 +16,10 @@ uniform vec3 lightDir;
 uniform vec3 lightColor;
 uniform float lightPower;
 
-//const vec3 lightPos = vec3(1, 10, -20);
-//const vec3 lightColor = vec3(1, 1, 1);
-//const float lightPower = 4;
-
 const vec3 ambientColor = vec3(0.1, 0.1, 0.1);
 const vec3 diffuseColor = vec3(0.5, 0.5, 0.5);
 const vec3 specColor = vec3(1.0, 1.0, 1.0);
-const float shininess = 16.0;
+const float shininess = 100.0;
 const float screenGamma = 2.2; // Assumes screen is set to sRGB or summin'
 
 void main() {
