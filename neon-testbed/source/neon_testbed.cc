@@ -90,6 +90,11 @@ namespace neon {
 		}
 		terrain_.camera_ = &camera_;
 
+		if (!wall_.create("assets/Wall/brick_1.png", "assets/Wall/brick normal.png"))
+		{
+			return false;
+		}
+
       object1_.light_ = &light_;
       object2_.light_ = &light_;
       object3_.light_ = &light_;

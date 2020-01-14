@@ -97,6 +97,7 @@
     <ClCompile Include="source\neon_graphics.cc" />
     <ClCompile Include="source\neon_model.cc" />
     <ClCompile Include="source\neon_object.cc" />
+    <ClCompile Include="source\neon_plane.cc" />
     <ClCompile Include="source\neon_testbed.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +107,7 @@
     <ClInclude Include="include\neon_graphics.h" />
     <ClInclude Include="include\neon_model.h" />
     <ClInclude Include="include\neon_object.h" />
+    <ClInclude Include="include\neon_plane.h" />
     <ClInclude Include="include\neon_testbed.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

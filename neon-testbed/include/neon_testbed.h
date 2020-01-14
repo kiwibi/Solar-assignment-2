@@ -10,6 +10,7 @@
 #include "neon_object.h"
 #include "neon_framebuffer.h"
 #include "DirectionalLight.h"
+#include "neon_plane.h"
 
 namespace neon {
    struct vertex {
@@ -50,6 +51,8 @@ namespace neon {
 		framebuffer framebuffer_;
 
       DirectionalLight light_;
+
+		wall wall_;
    };
 } // !neon
 
