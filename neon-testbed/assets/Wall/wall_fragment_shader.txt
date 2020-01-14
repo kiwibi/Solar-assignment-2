@@ -3,7 +3,8 @@
 // https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_reflection_model
 // Heavily based on this
 
-uniform sampler2D diffuse;
+uniform sampler2D diffuse; // slot 0
+uniform sampler2D normalMap; // slot 1
 
 in vec2 f_texcoord;
 in vec3 f_normal;
@@ -23,8 +24,8 @@ const float shininess = 100.0;
 const float screenGamma = 2.2; // Assumes screen is set to sRGB or summin'
 
 void main() {
-	
-	vec3 normal = normalize(f_normal);
+	vec3 normal = texture(normalMap, f_texcoord).rgb;
+	normal = normalize(f_normal * 2.0 - 1.0);
 	vec3 f_lightDir = normalize(lightDir);
 	
 	float lambertian = max(dot(f_lightDir,normal), 0);
