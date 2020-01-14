@@ -19,5 +19,4 @@ void main() {
 	f_vert = vec3(vert) / vert.w;
 	f_texcoord = texcoord;
 	f_normal = vec3(world * vec4(normal, 0));
-
 }

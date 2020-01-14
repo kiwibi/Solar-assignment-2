@@ -90,7 +90,7 @@ namespace neon {
 		}
 		terrain_.camera_ = &camera_;
 
-		if (!wall_.create("assets/Wall/brick_1.png", "assets/Wall/brick normal.png"))
+		if (!wall_.create("assets/Wall/brick_1.png", "assets/Wall/brick_normal.png"))
 		{
 			return false;
 		}
@@ -100,6 +100,7 @@ namespace neon {
       object3_.light_ = &light_;
       object4_.light_ = &light_;
 		terrain_.light_ = &light_;
+      wall_.light_    = &light_;
 
 		object1_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -20.0f));
 		object2_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0.0f, -20.0f));
@@ -108,7 +109,7 @@ namespace neon {
 
 
 		framebuffer_format formats[] = { FRAMEBUFFER_FORMAT_RGBA8 };
-		if(!framebuffer_.create(240, 135, _countof(formats), formats, FRAMEBUFFER_FORMAT_D32)) { // 240, 135 for low res goodness, 1280, 720 for full res
+		if(!framebuffer_.create(1280, 720, _countof(formats), formats, FRAMEBUFFER_FORMAT_D32)) { // 240, 135 for low res goodness, 1280, 720 for full res
 			return false;
 		}
       
@@ -177,7 +178,9 @@ namespace neon {
 		object3_.render(camera_);
 		object4_.render(camera_);
 
-		terrain_.render();
+		//terrain_.render();
+
+      wall_.render(camera_);
 
 		framebuffer::unbind(1280, 720);
 

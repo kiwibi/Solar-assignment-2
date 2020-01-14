@@ -4,6 +4,7 @@
 
 #include <neon_core.h>
 #include "neon_graphics.h"
+#include "DirectionalLight.h"
 
 namespace neon {
 	struct wall {
@@ -14,17 +15,20 @@ namespace neon {
 		wall();
 		bool create(const string& texturePath, const string& normalMapPath);
 
+      void render(fps_camera camera);
+
 		shader_program program_;
 		vertex_buffer vbo_;
 		vertex_format format_;
 		texture texture_;
+      texture normalMap_;
 		sampler_state sampler_;
 
 		float size_;
 		glm::vec3 normal_;
 		glm::mat4 world_;
 
-		fps_camera* camera_;
+      DirectionalLight* light_;
 	};
 }
 
