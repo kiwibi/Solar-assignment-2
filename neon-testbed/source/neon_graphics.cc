@@ -973,7 +973,6 @@ namespace neon {
                                        glm::vec3(-5.0f, -3.0f, -10.0f));
 
       program_.set_uniform_mat4("world", world);
-      program_.set_uniform_vec3("light_direction", glm::vec3(0.7f, -1.0f, 0.3f));
 
       return true;
    }
@@ -985,6 +984,9 @@ namespace neon {
    {
       program_.set_uniform_mat4("projection", camera_->projection_);
       program_.set_uniform_mat4("view", camera_->view_);
+		program_.set_uniform_vec3("lightDir", light_->direction_);
+		program_.set_uniform_vec3("lightColor", light_->colour_);
+		program_.set_uniform_float("lightPower", light_->power_ / 2);
 
       glFrontFace(GL_CW);
       glEnable(GL_DEPTH_TEST);

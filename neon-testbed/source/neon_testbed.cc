@@ -85,11 +85,16 @@ namespace neon {
 		if (!object4_.create(glm::mat4(1.0f), "assets/model/teapot_diffuse.png", "assets/model/teapot.glb")) {
 			return false;
 		}
+		if (!terrain_.create("assets/heightmap/heightmap.png", "assets/heightmap/texture.png")) {
+			return false;;
+		}
+		terrain_.camera_ = &camera_;
 
       object1_.light_ = &light_;
       object2_.light_ = &light_;
       object3_.light_ = &light_;
       object4_.light_ = &light_;
+		terrain_.light_ = &light_;
 
 		object1_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -20.0f));
 		object2_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0.0f, -20.0f));
@@ -166,6 +171,8 @@ namespace neon {
 		object2_.render(camera_);
 		object3_.render(camera_);
 		object4_.render(camera_);
+
+		terrain_.render();
 
 		framebuffer::unbind(1280, 720);
 

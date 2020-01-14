@@ -221,6 +221,8 @@ namespace neon {
       int index_count_;
 
 		fps_camera* camera_;
+
+		DirectionalLight *light_;
    };
 
    struct bounding_sphere {
