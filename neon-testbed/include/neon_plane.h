@@ -19,6 +19,7 @@ namespace neon {
 		bool create(const string& texturePath, const string& normalMapPath);
 
       void render(fps_camera camera);
+      void update(const time& deltaTime);
 
 		shader_program program_;
 		vertex_buffer vbo_;
@@ -29,6 +30,7 @@ namespace neon {
 		sampler_state sampler_;
 
 		float size_;
+      float rotation_;
 		glm::vec3 normal_;
 		glm::mat4 world_;
 

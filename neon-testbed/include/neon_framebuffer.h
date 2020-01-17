@@ -36,7 +36,7 @@ namespace neon {
       int32 height_;
       uint32 id_;
       uint32 depth_attachment_;
-      uint32 color_attachments_[MAX_FRAMEBUFFER_ATTACHMENTS];
+      uint32 color_attachments_[MAX_FRAMEBUFFER_ATTACHMENTS]; //color_attachments_[0] is the one we use.
    };
 } // !neon
 

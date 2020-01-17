@@ -2,11 +2,11 @@
 #include "neon_plane.h"
 
 namespace neon {
-	wall::wall()
-		: size_(1)
-		, world_(1.0f)
+   wall::wall()
+      : size_(7)
+      , world_(1.0f)
+      , rotation_(0.0f)
 	{
-      world_ = glm::translate(world_, glm::vec3(0.0f, 0.0f, -10.0f));
 	};
 
 	bool wall::create(const string& texturePath, const string& normalMapPath){
@@ -28,10 +28,10 @@ namespace neon {
 		}
       vertex vertices[] = {
          //side 1, triangle 1
-         { glm::vec3(-size_,   size_,   size_),   glm::vec2(0.0f,1.0f)},
-         { glm::vec3(-size_,  -size_,   size_),   glm::vec2(0.0f,0.0f)},
-         { glm::vec3(size_,  -size_,   size_),   glm::vec2(1.0f,0.0f)},
-         { glm::vec3(size_,   size_,   size_),   glm::vec2(1.0f,1.0f)},
+         { glm::vec3(-size_,   size_,   0),   glm::vec2(0.0f,1.0f)},
+         { glm::vec3(-size_,  -size_,   0),   glm::vec2(0.0f,0.0f)},
+         { glm::vec3( size_,  -size_,   0),   glm::vec2(1.0f,0.0f)},
+         { glm::vec3( size_,   size_,   0),   glm::vec2(1.0f,1.0f)},
       };
 
       dynamic_array<uint32> indices;
@@ -88,6 +88,7 @@ namespace neon {
          return false;
       }
 
+
 		return true;
 	}
    void wall::render(fps_camera camera)
@@ -121,5 +122,13 @@ namespace neon {
       sampler_.bind(1);
 
       index_.render(GL_TRIANGLES, 1, 6);
+   }
+   void wall::update(const time& deltaTime)
+   {
+      rotation_ = deltaTime.as_seconds();
+      world_ = glm::rotate(world_, rotation_, glm::vec3(-1.0f, 1.0f, 0.0f));
+      normal_.x = world_[2].x;
+      normal_.y = world_[2].y;
+      normal_.z = world_[2].z;
    }
 }

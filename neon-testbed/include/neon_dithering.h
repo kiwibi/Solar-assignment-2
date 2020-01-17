@@ -21,8 +21,6 @@ namespace neon {
       void Bind() const;
       void Dither (framebuffer *image); // This should run the image trough the shader_program to apply the effect
 
-      vertex_format format_;
-      vertex_buffer buffer_;
       shader_program program_;
       sampler_state sampler_;
 

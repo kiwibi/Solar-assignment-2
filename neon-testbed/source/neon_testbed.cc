@@ -106,6 +106,7 @@ namespace neon {
 		object2_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0.0f, -20.0f));
 		object3_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(20.0f, 0.0f, -20.0f));
 		object4_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(30.0f, 0.0f, -20.0f));
+      wall_.world_ = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -40.0f));
 
 
 		framebuffer_format formats[] = { FRAMEBUFFER_FORMAT_RGBA8 };
@@ -125,6 +126,7 @@ namespace neon {
       }
 
       controller_.update(dt); // run controller update
+      wall_.update(dt); // run wall update
 
 		//spin teapot nr 1
 		object1_.world_ = glm::rotate(object1_.world_,
@@ -169,6 +171,8 @@ namespace neon {
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+      glEnable(GL_DEPTH_TEST);
 		
 		//	render objects
 		skybox_.render(camera_);
@@ -184,10 +188,18 @@ namespace neon {
 
 		framebuffer::unbind(1280, 720);
 
-      // Here we do post processing effects
-      // !
+      // Second pass
+      glClear(GL_COLOR_BUFFER_BIT); // Clear the standard frame buffer
 
-		framebuffer_.blit(0, 0, 1280, 720);
+      // Here we do post processing effects
+
+      ditherer_.Dither(&framebuffer_);
+
+      // !
+      //glBindVertexArray();
+      glDisable(GL_DEPTH_TEST);
+
+		//framebuffer_.blit(0, 0, 1280, 720); // renders what the frame buffer contains to the screen.
 
       // flush fps counter to actually draw it.
       frameCounter_.flush();

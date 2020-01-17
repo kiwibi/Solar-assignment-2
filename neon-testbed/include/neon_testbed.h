@@ -11,6 +11,7 @@
 #include "neon_framebuffer.h"
 #include "DirectionalLight.h"
 #include "neon_plane.h"
+#include "neon_dithering.h"
 
 namespace neon {
    struct vertex {
@@ -49,6 +50,7 @@ namespace neon {
 		object object4_;
 
 		framebuffer framebuffer_;
+      Dithering ditherer_;
 
       DirectionalLight light_;
 

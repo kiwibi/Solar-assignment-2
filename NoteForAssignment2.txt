@@ -12,6 +12,7 @@ Our directional light needs to be able to change direction. And colour. Done
 What is normal mapping? Done
 
 NOTE: Rewrite normal mapping and phong to be less stealing
+for the normal mapp do cross product with glm::cross https://youtu.be/0QhR7WSoF78?t=153
 
 What is shadow mapping? Wikipedia shadow mapping CSSM
 How to post-process using framebuffer?
