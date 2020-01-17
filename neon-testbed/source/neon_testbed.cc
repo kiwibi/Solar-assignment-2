@@ -55,6 +55,7 @@ namespace neon {
 		, orbit_(0.0f)
 		, teapotLength_(false)
       , light_(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 4.0f)
+		, postProcess_(true)
 	{
 	}
 
@@ -110,7 +111,10 @@ namespace neon {
 
 
 		framebuffer_format formats[] = { FRAMEBUFFER_FORMAT_RGBA8 };
-		if(!framebuffer_.create(240, 135, _countof(formats), formats, FRAMEBUFFER_FORMAT_D32)) { // 240, 135 for low res goodness, 1280, 720 for full res
+		if(!lowRes_.create(240, 135, _countof(formats), formats, FRAMEBUFFER_FORMAT_D32)) { // 240, 135 for low res goodness, 1280, 720 for full res
+			return false;
+		}
+		if (!highRes_.create(1280, 720, _countof(formats), formats, FRAMEBUFFER_FORMAT_D32)) {
 			return false;
 		}
       
@@ -134,6 +138,13 @@ namespace neon {
       if (keyboard_.is_pressed(KEYCODE_ESCAPE)) {
          return false;
       }
+		if (keyboard_.is_pressed(KEYCODE_SPACE))
+		{
+			if (postProcess_ == true)
+				postProcess_ = false;
+			else
+				postProcess_ = true;
+		}
 
       controller_.update(dt); // run controller update
       wall_.update(dt); // run wall update
@@ -177,7 +188,15 @@ namespace neon {
       //render fps counter
       frameCounter_.render(0.0f, 1.0f, "FPS: " + fps);
 
-		framebuffer_.bind();
+		switch (postProcess_)
+		{
+		case true:
+			lowRes_.bind();
+			break;
+		case false:
+			highRes_.bind();
+			break;
+		}
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -198,22 +217,31 @@ namespace neon {
 
 		framebuffer::unbind(1280, 720);
 
-      // Second pass
-      //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-      glClear(GL_COLOR_BUFFER_BIT); // Clear the standard frame buffer
-
-      // Here we do post processing effects
-
-      ditherer_.Dither(&framebuffer_);
       
-      // !
-      
-      glDisable(GL_DEPTH_TEST);
-      glActiveTexture(GL_TEXTURE0);
-      glBindTexture(GL_TEXTURE_2D, framebuffer_.color_attachments_[0]);
-      quad_.render();
+		switch (postProcess_)
+		{
+		case true:
+			// Second pass
+			//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT); // Clear the standard frame buffer
 
-		//framebuffer_.blit(0, 0, 1280, 720); // renders what the frame buffer contains to the screen.
+			// Here we do post processing effects
+			ditherer_.Dither(&lowRes_);
+
+			// !
+
+			glDisable(GL_DEPTH_TEST);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, lowRes_.color_attachments_[0]);
+			quad_.render();
+			break;
+		case false:
+			highRes_.blit(0, 0, 1280, 720); // renders what the frame buffer contains to the screen.
+			break;
+		}
+     
+
+		
 
       // flush fps counter to actually draw it.
       frameCounter_.flush();

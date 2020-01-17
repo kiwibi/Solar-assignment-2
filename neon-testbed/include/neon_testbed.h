@@ -35,6 +35,7 @@ namespace neon {
       float rotation_;
 		float orbit_;
 		bool teapotLength_;
+		bool postProcess_;
       
       bitmap_font mouseX_; // we want fonts
       bitmap_font mouseY_; // Made another and named both to mouse because I am testing shit
@@ -50,7 +51,8 @@ namespace neon {
 		object object3_;
 		object object4_;
 
-		framebuffer framebuffer_;
+		framebuffer lowRes_;
+		framebuffer highRes_;
       Dithering ditherer_;
 
       DirectionalLight light_;
