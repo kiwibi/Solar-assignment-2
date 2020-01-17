@@ -6,7 +6,48 @@ in vec2 f_texcoord;
 
 out vec4 frag_color;
 
+vec4 check(vec4 color, float cutoff)
+{
+	if (color.r < cutoff)
+	{
+		color.r = 0;
+	}
+	if (color.g < cutoff)
+	{
+		color.g = 0;
+	}
+	if (color.b < cutoff)
+	{
+		color.b = 0;
+	}
+	return color;
+}
+
 void main(){
-   vec4 color = texture(diffuse, f_texcoord).rbga;
+   vec4 color = texture(diffuse, f_texcoord);
+   vec2 currentPixel;
+   currentPixel.x = f_texcoord.x * textureSize(diffuse, 0).x;
+   currentPixel.y = f_texcoord.y * textureSize(diffuse, 0).y;
+   
+   vec2 modPX;
+   modPX.x = mod(currentPixel.x, 2.0);
+   modPX.y = mod(currentPixel.y, 2.0); 
+   
+   if (modPX.x <= 1 && modPX.y <= 1)
+   {
+		color = check(color, 0.25);
+   }
+   if (modPX.x >= 1 && modPX.y <= 1)
+   {
+		color = check(color, 0.5);
+   }
+   if (modPX.x <= 1 && modPX.y >= 1)
+   {
+		color = check(color, 0.75);
+   }
+   if (modPX.x >= 1 && modPX.y >= 1)
+   {
+		color = check(color, 0.0);
+   }
    frag_color = color;
 }

@@ -28,9 +28,8 @@ namespace neon{
    }
 
    void Dithering::Dither(framebuffer* image) {
-      program_.bind();
-      glBindTexture(GL_TEXTURE_2D, image->id_);
       sampler_.bind();
+      program_.bind();
 
       // here I want to send the texture data from the framebuffer to the shader_program
       // Does that mean I need to create the buffer here?

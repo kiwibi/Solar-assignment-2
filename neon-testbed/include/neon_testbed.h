@@ -12,6 +12,7 @@
 #include "DirectionalLight.h"
 #include "neon_plane.h"
 #include "neon_dithering.h"
+#include "neon_quad.h"
 
 namespace neon {
    struct vertex {
@@ -55,6 +56,7 @@ namespace neon {
       DirectionalLight light_;
 
 		wall wall_;
+      quad quad_;
    };
 } // !neon
 

@@ -110,10 +110,20 @@ namespace neon {
 
 
 		framebuffer_format formats[] = { FRAMEBUFFER_FORMAT_RGBA8 };
-		if(!framebuffer_.create(1280, 720, _countof(formats), formats, FRAMEBUFFER_FORMAT_D32)) { // 240, 135 for low res goodness, 1280, 720 for full res
+		if(!framebuffer_.create(240, 135, _countof(formats), formats, FRAMEBUFFER_FORMAT_D32)) { // 240, 135 for low res goodness, 1280, 720 for full res
 			return false;
 		}
       
+      if (!ditherer_.Create())
+      {
+         return false;
+      }
+
+      if (!quad_.create(&ditherer_.program_))
+      {
+         return false;
+      }
+
       return true;
    }
 
@@ -189,15 +199,19 @@ namespace neon {
 		framebuffer::unbind(1280, 720);
 
       // Second pass
+      //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
       glClear(GL_COLOR_BUFFER_BIT); // Clear the standard frame buffer
 
       // Here we do post processing effects
 
       ditherer_.Dither(&framebuffer_);
-
+      
       // !
-      //glBindVertexArray();
+      
       glDisable(GL_DEPTH_TEST);
+      glActiveTexture(GL_TEXTURE0);
+      glBindTexture(GL_TEXTURE_2D, framebuffer_.color_attachments_[0]);
+      quad_.render();
 
 		//framebuffer_.blit(0, 0, 1280, 720); // renders what the frame buffer contains to the screen.
 

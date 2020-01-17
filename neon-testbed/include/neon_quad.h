@@ -6,6 +6,11 @@
 
 namespace neon {
 	struct quad {
+      struct vertex {
+         glm::vec2 position_;
+         glm::vec2 texcoord_;
+      };
+
 		quad();
 		bool create(shader_program *program);
 
